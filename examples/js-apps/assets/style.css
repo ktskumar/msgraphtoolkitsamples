@@ -1,0 +1,47 @@
+body {
+    font-family: SegoeUI, Helvetica, Arial, sans-serif;
+    margin:auto;
+    padding: 0px;
+}
+
+@font-face {
+    font-family: 'SegoeUI';
+    src: local('Segoe UI Light');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SegoeUI';
+    src: local('Segoe UI Semilight');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SegoeUI';
+    src: local('Segoe UI');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SegoeUI';
+    src: local('Segoe UI Semibold');
+    font-weight: 600;
+    font-style: normal;
+}
+
+header{
+    padding:0 10px;
+    height: 64px;
+    align-items: center;
+    display:flex;
+    flex-direction: row;
+    border:1px solid #eee;
+    font-size:18px;
+    font-weight: bold;
+}
+mgt-login{
+    margin-left: auto;
+}

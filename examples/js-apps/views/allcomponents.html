@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SharePoint Saturday Demo</title>
+        <link rel="stylesheet"
+    href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
+  <style type="text/css">
+    body {
+      font-family: SegoeUI, Helvetica, Arial, sans-serif
+    }
+    @font-face {
+  font-family: 'SegoeUI';
+  src: local('Segoe UI Light');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: local('Segoe UI Semilight');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: local('Segoe UI');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: local('Segoe UI Semibold');
+  font-weight: 600;
+  font-style: normal;
+}
+mgt-person {
+  --avatar-size-s: 24px;
+  --avatar-size: 120px; 
+  --avatar-font-size--s: 16px;
+  --avatar-font-size: 32px; 
+  --avatar-border: 0;
+  --initials-color: white;
+  --initials-background-color: magenta;
+  --font-size: 12px;
+  --font-weight: 500;
+  --color: black;
+  --email-font-size: 12px;
+  --email-color: black;
+}
+        
+        </style>
+    </head>
+    <body>
+        <h1>Microsoft Graph Toolkit - Testing All Components</h1>
+        <mgt-msal-provider client-id="[CLIENT-ID]" 
+        login-type="redirect/popup" 
+        scopes="user.read people.read Directory.Read.All user.read.all Group.Read.All Files.Read.All"></mgt-msal-provider>
+        <mgt-login>           
+        </mgt-login>
+        <mgt-person person-query="vignesh" show-name show-email></mgt-person>
+        <mgt-people show-max="4"></mgt-people>               
+        <mgt-people-picker></mgt-people-picker>
+
+        <mgt-get resource="/groups" scope="group.read.all" version="v1.0">
+            <template data-type="default">
+                <ul>
+                    <li data-for="group of value">
+                        {{group.displayName}}
+                    </li>
+                </ul>
+            </template>
+            </mgt-get>
+            
+        <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+    </body>
+</html>
