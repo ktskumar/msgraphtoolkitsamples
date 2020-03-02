@@ -11,8 +11,8 @@
     <style type="text/css">
         .heirarchy {
             text-align: right;
-            padding: 10px;           
-            
+            padding: 10px;
+
         }
 
         .employee {
@@ -24,7 +24,7 @@
 
         .employee li {
             display: inline-block;
-            width: 40%;            
+            width: 40%;
             margin-bottom: -3px;
         }
 
@@ -108,7 +108,7 @@
             float: left;
         }
 
-        
+
 
         .child li:nth-child(odd) {
             margin-bottom: 30px;
@@ -175,94 +175,94 @@
 
     <div class="kts-container">
 
-    <div class="heirarchy">
+        <div class="heirarchy">
 
-        <mgt-get class="presence" resource="/me/manager" version="v1.0" scopes="User.Read.All">
-            <template data-type="default">
+            <mgt-get class="presence" resource="/me/manager" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
 
-                <ul class="parent employee">
-                    <li>
-                        <div class="profile">
-                            <mgt-get resource="/users/{{id}}/photo/$value" version="v1.0" copes="User.Read.All">
-                                <template data-type="default">
-                                    <img data-if="personImage" src="{{personImage}}" />
-                                </template>
-                                <template data-type="error">
-                                    <img
-                                        src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
-                                </template>
-                            </mgt-get>
+                    <ul class="parent employee">
+                        <li>
+                            <div class="profile">
+                                <mgt-get resource="/users/{{id}}/photo/$value" version="v1.0" copes="User.Read.All">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                    </template>
+                                    <template data-type="error">
+                                        <img
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+                                    </template>
+                                </mgt-get>
 
-                            <div class="content-container">
-                                <div class="content name">{{displayName}}</div>
-                                <div class="content">{{mail}}</div>
+                                <div class="content-container">
+                                    <div class="content name">{{displayName}}</div>
+                                    <div class="content">{{mail}}</div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </template>
-        </mgt-get>
+                        </li>
+                    </ul>
+                </template>
+            </mgt-get>
 
 
-        <div></div>
+            <div></div>
 
-        <mgt-get class="presence" resource="/me" version="v1.0" scopes="User.Read.All">
-            <template data-type="default">
-                <ul class="self employee">
-                    <li>
-                        <div class="profile">
+            <mgt-get class="presence" resource="/me" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
+                    <ul class="self employee">
+                        <li>
+                            <div class="profile">
 
 
-                            <mgt-person person-query="{{mail}}">
-                                <template data-type="default">
-                                    <img data-if="personImage" src="{{personImage}}" />
-                                    <img data-else
-                                        src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+                                <mgt-person person-query="{{mail}}">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                        <img data-else
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
 
-                                </template>
-                            </mgt-person>
-                            <div class="content-container">
-                                <div class="content name">{{displayName}}</div>
-                                <div class="content">{{mail}}</div>
+                                    </template>
+                                </mgt-person>
+                                <div class="content-container">
+                                    <div class="content name">{{displayName}}</div>
+                                    <div class="content">{{mail}}</div>
+                                </div>
                             </div>
-                        </div>
 
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
 
-            </template>
-        </mgt-get>
+                </template>
+            </mgt-get>
 
-        <div></div>
+            <div></div>
 
-        <mgt-get class="presence" resource="/me/directreports" version="v1.0" scopes="User.Read.All">
-            <template data-type="default">
-                <ul class="child employee">
-                    <li data-for="child of value">
-                        <div class="profile">
-                            <mgt-person person-query="{{child.mail}}">
-                                <template data-type="default">
-                                    <img data-if="personImage" src="{{personImage}}" />
-                                    <img data-else
-                                        src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+            <mgt-get class="presence" resource="/me/directreports" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
+                    <ul class="child employee">
+                        <li data-for="child of value">
+                            <div class="profile">
+                                <mgt-person person-query="{{child.mail}}">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                        <img data-else
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
 
-                                </template>
-                            </mgt-person>
+                                    </template>
+                                </mgt-person>
 
 
-                            <div class="content-container">
-                                <div class="content name">{{child.displayName}}</div>
-                                <div class="content">{{child.mail}}</div>
+                                <div class="content-container">
+                                    <div class="content name">{{child.displayName}}</div>
+                                    <div class="content">{{child.mail}}</div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
-                </ul>
-            </template>
-        </mgt-get>
+                    </ul>
+                </template>
+            </mgt-get>
 
+        </div>
     </div>
-</div>
 
     <script type="text/javascript">
         function converttime(ft) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Microsoft Graph Toolkit Samples!</title>
     <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
@@ -83,7 +84,7 @@
         }
 
         .flag {
-            position: relative;            
+            position: relative;
             background: rgb(248, 248, 248);
             padding: 6px 10px;
             border-radius: 5px;
@@ -284,6 +285,7 @@
         }
 
         @media screen and (min-width: 400px ?? max-width: 660px) {
+
             .direction-l .desc,
             .direction-r .desc {
                 margin: 1em 4em 0 4em;
@@ -291,8 +293,9 @@
         }
     </style>
 </head>
+
 <body>
-    <mgt-msal-provider client-id="2c2fc92b-a7c2-459e-bba9-90e3c97993a6" login-type="redirect"
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="redirect"
         scopes="User.Read User.Read.All Group.Read.All" authority="">
     </mgt-msal-provider>
     <header>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Microsoft Graph Toolkit Samples!</title>
     <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
@@ -8,11 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
     <style type="text/css">
-       
+
     </style>
 </head>
+
 <body>
-    <mgt-msal-provider client-id="2c2fc92b-a7c2-459e-bba9-90e3c97993a6" login-type="redirect"
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="redirect"
         scopes="User.Read RoleManagement.Read.Directory User.Read.All" authority="">
     </mgt-msal-provider>
     <header>
@@ -20,19 +22,20 @@
         <mgt-login></mgt-login>
     </header>
     <!--  CONTAINER  -->
-    <!-- https://codepen.io/NilsWe/pen/FemfK-->
     <div class="kts-container">
-        <mgt-get resource="/directoryRoles?$expand=members" version="beta" scopes="RoleManagement.Read.Directory User.Read.All">
-        <template data-type="default">
-            <ul>
-                <li data-for="dr in value">
-                    <h2>{{dr.displayName}}</h2>    
-                
-                    <mgt-person data-for="mem of dr.members" person-query={{mem.displayName}} show-name></mgt-person>
+        <mgt-get resource="/directoryRoles?$expand=members" version="beta"
+            scopes="RoleManagement.Read.Directory User.Read.All">
+            <template data-type="default">
+                <ul>
+                    <li data-for="dr in value">
+                        <h2>{{dr.displayName}}</h2>
 
-                </li>
-            </ul>            
-        </template>
+                        <mgt-person data-for="mem of dr.members" person-query={{mem.displayName}} show-name>
+                        </mgt-person>
+
+                    </li>
+                </ul>
+            </template>
         </mgt-get>
     </div>
     <script type="text/javascript">
