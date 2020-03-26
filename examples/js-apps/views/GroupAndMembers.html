@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Microsoft Graph Toolkit Samples!</title>
+    <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+        href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
+    <style type="text/css">
+        body {
+            font-family: SegoeUI, Helvetica, Arial, sans-serif
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: local('Segoe UI Light');
+            font-weight: 100;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: local('Segoe UI Semilight');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: local('Segoe UI');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SegoeUI';
+            src: local('Segoe UI Semibold');
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .kts-container {
+            margin: auto;
+            width: 50%;
+        }
+
+        .ms-Dropdown-select {
+            color: rgb(50, 49, 48);
+            border: 1px solid rgb(50, 49, 48);
+            font-size: 14px;
+            padding: 5px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Microsoft Graph Toolkit - Groups and its Members</h2>
+
+    <mgt-msal-provider client-id="[Client-ID]" login-type="popup"
+        scopes="User.Read People.Read Group.Read.All User.Read.All" authority="">
+    </mgt-msal-provider>
+    <mgt-login></mgt-login>
+    <!--  CONTAINER  -->
+
+    <div class="kts-container">
+
+        <div class="ms-Dropdown" tabindex="0">
+
+            <div>All Groups</div>
+            <mgt-get resource="/groups" version="v1.0" scopes="Group.Read.All">
+                <template data-type="default">
+
+                    <select class="ms-Dropdown-select" onchange="grpchange(this)">
+                        <option>Choose a group...</option>
+                        <option data-for="grp of value" value="{{grp.id}}" text="{{grp.displayName}}">
+                            {{grp.displayName}}
+                        </option>
+                    </select>
+                </template>
+                <template data-type="error">
+                    {{{console.log("error");}}}
+                </template>
+
+            </mgt-get>
+        </div>
+        <div id="showgrpmembers">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function grpchange(e) {
+            var html = " <div>Group Members</div>";
+            html += "<mgt-people id=\"grpPeople\" group-id=" + e.value + " show-max='10' ></mgt-people>"
+            document.getElementById("showgrpmembers").innerHTML = html;
+        }
+    </script>
+    <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+</body>
+
+</html>

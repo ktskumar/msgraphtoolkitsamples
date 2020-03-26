@@ -1,0 +1,25 @@
+{
+  "name": "mgtjs-apps",
+  "version": "1.0.0",
+  "description": "Project contains examples of microsoft graph toolkit components built with javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js"
+  },
+  "keywords": [
+    "MGT",
+    "Microsoft",
+    "Graph",
+    "Microsoft",
+    "Graph",
+    "Toolkit",
+    "Office",
+    "365"
+  ],
+  "author": "Shantha Kumar T ( @ktskumar )",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

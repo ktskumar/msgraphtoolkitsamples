@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Microsoft Graph Toolkit Samples!</title>
+    <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+    <style type="text/css">
+        .container {
+            display: flex;
+            justify-content: center;
+            align-content: flex-start;
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            padding: 20px;
+
+        }
+
+        .circle {
+            border: 1px solid #fff;
+            background-color: #b4009e;
+            width: 120px;
+            height: 120px;
+            border-radius: 1000px;
+            margin: 0.5em;
+        }
+
+        .circle:hover {
+            background-color: #008000;
+            border-style: dotted;
+        }
+
+        .aligner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 37.5px;
+            height: 100%;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+
+
+    <script src="/scripts/index.js" defer></script>
+</head>
+
+<body>
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="popup" scopes="user.read people.read user.read.all"
+        authority="">
+    </mgt-msal-provider>
+    <header>
+        <div class="title">Microsoft Graph Toolkit - All Users</div>
+        <mgt-login></mgt-login>
+    </header>
+
+    <!--  CONTAINER  -->
+
+    <div class="kts-container">
+        <mgt-people>
+            <template>
+                <div class="container">
+                    <div data-for="person in people">
+                        <mgt-person person-query="{{ person.displayName }}" person-card="hover" show-name="true"
+                            show-email="true">
+                            <template>
+                                <div data-if="personImage">
+                                    <img src="{{personImage}}" />
+                                </div>
+                                <div data-else>
+                                    <div class="circle">
+                                        <div class="aligner">
+                                            {{{generateInitial(person.displayName)}}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </mgt-person>
+                    </div>
+                </div>
+            </template>
+        </mgt-people>
+    </div>
+    <script type="text/javascript">
+        function generateInitial(name) {
+            console.log(name);
+            var strnames = name.split(' ');
+            var initials = "";
+            if (strnames.length > 1) {
+                var firstName = strnames[0];
+                var lastName = strnames[1];
+                initials = firstName.charAt(0) + lastName.charAt(0);
+            } else {
+                initials = name.charAt(0);
+            }
+            return initials;
+        }
+    </script>
+    <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+</body>
+
+</html>

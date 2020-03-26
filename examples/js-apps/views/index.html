@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Microsoft Graph Toolkit Samples!</title>
+    <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+    <style type="text/css">
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+           flex:1;
+            
+        }
+        .subject{          
+            border-right:1px solid #eee;
+        }
+        .body{          
+            flex-basis: 60%;
+            }
+    </style>
+    <script type="text/javascript">
+
+    </script>
+
+</head>
+
+<body>
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="redirect" scopes="Mail.Read"
+        authority="">
+    </mgt-msal-provider>
+    <header>
+        <div class="title">Microsoft Graph Toolkit - My Mails</div>
+        <mgt-login></mgt-login>
+    </header>
+    <!--  CONTAINER  -->
+
+
+    <div class="kts-container">
+        
+        
+        <div class="row">
+            <div class="column subject">
+                <mgt-get resource="/me/messages" version="beta" scopes="Mail.Read">
+                    <template data-type="default">
+                <ul>
+                    <li data-for="mail in value">
+                        <div data-id={{mail.id}} class="mail-subject" onclick="myFunction(this)">{{mail.subject}}</div>
+                        {{mail.sender.emailAddress.name}}
+                    </li>
+                </ul>
+            </template>
+        </mgt-get>
+            </div>
+            <div class="column body">
+                <mgt-get id="mailContent"  version="beta" scopes="Mail.Read">
+                    <template data-type="default">
+                        <span style="display:none">{{{insertHtml(body.content)}}}</span>                         
+                    </template>  
+                    </mgt-get>    
+                    <div id="mailc" ></div>
+            </div>
+        </div>
+    
+                
+           
+    </div>
+    <script type="text/javascript">
+        function converttime(ft) {
+            var dt = new Date(ft);
+            return dt.getDate() + "/" + dt.getMonth() + 1 + "/" + dt.getFullYear();
+
+        }
+        function dby2(num) {
+            return (num % 2) ? "direction-r" : "direction-l";
+        }
+
+        function insertHtml(v){
+            
+            
+document.getElementById('mailc').innerHTML = v;
+
+
+
+           
+            
+        }
+
+        
+
+
+var myFunction = function(e) {
+    
+    var attribute = e.getAttribute('data-id');
+    document.getElementById('mailContent').setAttribute('resource','/me/messages/'+attribute)
+    console.log(attribute);
+};
+
+
+
+    function getmailcontent(content){
+       console.log(content);
+    }
+    </script>
+    <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+</body>
+
+</html>

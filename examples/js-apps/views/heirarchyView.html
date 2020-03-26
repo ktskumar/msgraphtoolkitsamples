@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Microsoft Graph Toolkit Samples!</title>
+    <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+    <style type="text/css">
+        .heirarchy {
+            text-align: right;
+            padding: 10px;
+
+        }
+
+        .employee {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            text-align: left;
+        }
+
+        .employee li {
+            display: inline-block;
+            width: 40%;
+            margin-bottom: -3px;
+        }
+
+        .parent .profile {
+            background-color: rgb(0, 120, 212);
+            color: #fff;
+        }
+
+        .child .profile {
+            background-color: orange;
+            color: #fff;
+
+        }
+
+        .profile {
+            border: 1px solid gray;
+            height: 65px;
+            border-radius: 30px;
+            /*margin: 10px 0px;*/
+            text-align: left;
+            width: 80%;
+            float: left;
+
+            box-shadow: 0px 2px 0px rgba(100, 100, 100, 0.3);
+            display: inline-flex;
+            overflow: hidden;
+
+        }
+
+        .content-container {
+            display: inline-block;
+        }
+
+        .profile:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0px 4px 6px rgba(120, 120, 120, 0.7);
+            cursor: pointer;
+            color: #333;
+        }
+
+        .profile img {
+            height: 60px;
+            width: 60px;
+            float: left;
+            border-radius: 50%;
+            border: 2px solid #eee;
+        }
+
+        .profile .content {
+            margin: 5px 5px;
+            font-size: 14px;
+
+        }
+
+        .name {
+            font-weight: bold;
+
+        }
+
+        .self li {
+            margin-left: 30%;
+
+        }
+
+        .self .profile {
+            /*float: left;*/
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(100, 100, 100, 0.6);
+            color: #333;
+        }
+
+        .parent li::after {
+            content: "";
+            width: 19%;
+            height: 50px;
+            margin-top: 30px;
+            display: block;
+            border-top: 1px solid #666;
+            border-right: 1px solid #666;
+            border-radius: 0px 10px;
+            float: left;
+        }
+
+
+
+        .child li:nth-child(odd) {
+            margin-bottom: 30px;
+            margin-left: 5%;
+        }
+
+        .child li:first-child {
+            padding-top: 20px;
+        }
+
+        .child li:nth-child(even)::before {
+            content: "";
+            width: 19%;
+            height: 70px;
+            display: block;
+            margin-top: -40px;
+            border-bottom: 1px solid #666;
+            border-left: 1px solid #666;
+            border-radius: 0px 10px;
+            float: left;
+        }
+
+        .child li:nth-child(odd):not(:first-child)::after {
+            content: "";
+            width: 19%;
+            height: 80px;
+            display: block;
+            margin-top: -50px;
+            border-bottom: 1px solid #666;
+            border-right: 1px solid #666;
+            border-radius: 10px 0px;
+            float: right;
+        }
+
+        .child li:first-child::before {
+            content: "";
+            width: 19%;
+            height: 50px;
+            display: block;
+            margin-top: -20px;
+            border-bottom: 1px solid #666;
+            border-right: 1px solid #666;
+            border-radius: 10px 0px;
+            float: right;
+        }
+
+        .child li:nth-child(even) .profile {
+            float: right
+        }
+    </style>
+
+</head>
+
+<body>
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="popup"
+        scopes="user.read People.read Directory.Read.All User.read.all" authority=""></mgt-msal-provider>
+    <header>
+        <div class="title">Microsoft Graph Toolkit - Heirarchy View</div>
+        <mgt-login></mgt-login>
+    </header>
+
+
+    <!--  CONTAINER  -->
+
+    <div class="kts-container">
+
+        <div class="heirarchy">
+
+            <mgt-get class="presence" resource="/me/manager" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
+
+                    <ul class="parent employee">
+                        <li>
+                            <div class="profile">
+                                <mgt-get resource="/users/{{id}}/photo/$value" version="v1.0" copes="User.Read.All">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                    </template>
+                                    <template data-type="error">
+                                        <img
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+                                    </template>
+                                </mgt-get>
+
+                                <div class="content-container">
+                                    <div class="content name">{{displayName}}</div>
+                                    <div class="content">{{mail}}</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </template>
+            </mgt-get>
+
+
+            <div></div>
+
+            <mgt-get class="presence" resource="/me" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
+                    <ul class="self employee">
+                        <li>
+                            <div class="profile">
+
+
+                                <mgt-person person-query="{{mail}}">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                        <img data-else
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+
+                                    </template>
+                                </mgt-person>
+                                <div class="content-container">
+                                    <div class="content name">{{displayName}}</div>
+                                    <div class="content">{{mail}}</div>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </template>
+            </mgt-get>
+
+            <div></div>
+
+            <mgt-get class="presence" resource="/me/directreports" version="v1.0" scopes="User.Read.All">
+                <template data-type="default">
+                    <ul class="child employee">
+                        <li data-for="child of value">
+                            <div class="profile">
+                                <mgt-person person-query="{{child.mail}}">
+                                    <template data-type="default">
+                                        <img data-if="personImage" src="{{personImage}}" />
+                                        <img data-else
+                                            src="https://cdn.glitch.com/1be9e12f-8e02-423e-92ee-beb50f6ef95c%2Fprofileimage.jfif?v=1581001027779" />
+
+                                    </template>
+                                </mgt-person>
+
+
+                                <div class="content-container">
+                                    <div class="content name">{{child.displayName}}</div>
+                                    <div class="content">{{child.mail}}</div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </template>
+            </mgt-get>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function converttime(ft) {
+            var dt = new Date(ft);
+            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        }
+
+        function fileType(ft) {
+            var _ft = ft;
+            console.log(ft);
+            if (ft.includes('zip'))
+                return 'zip';
+            else if (ft.includes('wordprocessingml'))
+                return 'docx';
+            else if (ft.includes('plain'))
+                return 'txt';
+            else if (ft.includes('spreadsheetml'))
+                return 'xlsx';
+            else if (ft.includes('resentationml.presentation'))
+                return 'pptx';
+            else if (ft.includes('msonenote'))
+                return 'one'
+            else if (ft.includes('pdf'))
+                return 'pdf'
+            else
+                return 'txt'
+
+
+
+
+        }
+
+        function formatFileSize(bytes, decimalPoint) {
+            if (bytes == 0) return '0 Bytes';
+            var k = 1000,
+                dm = decimalPoint || 2,
+                sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+    </script>
+
+    <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+</body>
+
+</html>

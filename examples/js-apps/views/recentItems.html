@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Microsoft Graph Toolkit Samples!</title>
+    <meta name="description" content="A cool thing made with Microsoft Graph Toolkit">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="style.css" />
+    <style type="text/css">
+        body {
+            line-height: 1.25;
+            background-color: rgb(250, 249, 248);
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+            text-align: left;
+        }
+
+        table tr {
+            /*background-color: #f8f8f8;*/
+
+            border-top: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table tr:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .1);
+            background-color: #fff;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: left;
+            font-size: .75em;
+            color: rgb(96, 94, 92);
+            text-overflow: ellipsis;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .1);
+            background-color: #fff;
+        }
+
+        table td a {
+            text-decoration: none;
+        }
+
+        .kts-flex-container {
+            white-space: nowrap;
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .kts-icon {
+            margin-right: 12px;
+        }
+
+
+        .kts-icon img {
+            width: 32px;
+        }
+
+        .kts-item-name a {
+            color: rgb(37, 36, 35);
+            font-size: .80rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+
+
+            table td::before {
+                /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <mgt-msal-provider client-id="[CLIENT-ID]" login-type="popup"
+        scopes="user.read,people.read Directory.Read.All user.read.all Group.Read.All Files.Read.All" authority="">
+    </mgt-msal-provider>
+    <header>
+        <div class="title">Microsoft Graph Toolkit - Recent Items</div>
+        <mgt-login></mgt-login>
+    </header>
+    <!--  CONTAINER  -->
+
+    <div class="kts-container">
+        <mgt-get class="presence" resource="/me/drive/recent" version="v1.0" scopes="Files.Read.All">
+            <template data-type="default">
+
+                <table>
+                    <caption>Recent Items</caption>
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Name</th>
+                            <th scope="col">Modified</th>
+                            <th scope="col">Modified By</th>
+                            <th scope="col">File Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr data-for="file of value">
+
+                            <td data-label="Name">
+                                <div class='kts-flex-container'>
+                                    <i class='kts-icon' data-icon-name="{{{fileType(file.file.mimeType)}}}x32_svg"
+                                        aria-hidden="true" class="root-147">
+                                        <img
+                                            src="https://static2.sharepointonline.com/files/fabric/assets/item-types-fluent/32/{{{fileType(file.file.mimeType)}}}.svg?v6">
+                                    </i>
+                                    <div class="kts-item-name">
+                                        <a href='{{file.webUrl}}' target="_blank">{{file.name}}</a></div>
+                                </div>
+                            </td>
+                            <td data-label="Modified">{{{converttime(file.lastModifiedDateTime)}}}</td>
+                            <td data-label="Modified By">{{file.lastModifiedBy.user.displayName}}</td>
+                            <td data-label="File Size">{{{formatFileSize(file.size)}}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </mgt-get>
+    </div>
+    <script type="text/javascript">
+        function converttime(ft) {
+            var dt = new Date(ft);
+            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        }
+
+        function fileType(ft) {
+            var _ft = ft;
+            console.log(ft);
+            if (ft.includes('zip'))
+                return 'zip';
+            else if (ft.includes('wordprocessingml'))
+                return 'docx';
+            else if (ft.includes('plain'))
+                return 'txt';
+            else if (ft.includes('spreadsheetml'))
+                return 'xlsx';
+            else if (ft.includes('resentationml.presentation'))
+                return 'pptx';
+            else if (ft.includes('msonenote'))
+                return 'one';
+            else if (ft.includes('pdf'))
+                return 'pdf';
+            else
+                return 'txt';
+        }
+
+        function formatFileSize(bytes, decimalPoint) {
+            if (bytes == 0) return '0 Bytes';
+            var k = 1000,
+                dm = decimalPoint || 2,
+                sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+    </script>
+
+    <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+</body>
+
+</html>
